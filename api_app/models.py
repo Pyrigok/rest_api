@@ -17,4 +17,4 @@ class Post(models.Model):
 		verbose_name = u'Short books description')
 
 	def __str__(self):
-		return '%s %s' %(self.title, self.author, self.description)
+		return '%s %s %s' %(self.title, self.author, self.description)
