@@ -5,20 +5,43 @@ from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import status
+from rest_framework.views import APIView
+
+#from django.http import HttpResponse, JsonResponse
+#from rest_framework.renderers import JSONRenderer
+#from rest_framework.parsers import JSONParser
+
+
 from rest_framework_jwt.settings import api_settings
 
-from .models import Post
-from .serializers import PostsSerializer, TokenSerializer, LoginSerializer
+from .models import PostModel
+from .serializers import PostsSerializer, TokenSerializer, LoginSerializer, UserSerializer
+from .permissions import IsOwnerOrReadOnly
+
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
-class ListPostsView(generics.ListAPIView):
+
+class ListPostsView(generics.ListCreateAPIView):
 	"""Provides a get method handler"""
 
-	queryset = Post.objects.all()
+	queryset = PostModel.objects.all()
 	serializer_class = PostsSerializer
-	#permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+	def perform_create(self, serializer):
+		serializer.save(owner=self.request.user)
 
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+	queryset = PostModel.objects.all()
+	serializer_class = PostsSerializer
+	authentication_classes = (SessionAuthentication, BasicAuthentication)
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+#	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
+
+	def perform_create(self, serializer):
+		serializer.save(owner=self.request.user)
 
 
 # get the JWT settins
@@ -89,3 +112,7 @@ class RegisterUsersView(generics.CreateAPIView):
 				"message": "Registration was succesful!"
 				},
 			status=status.HTTP_201_CREATED)
+
+class UserList(generics.ListAPIView):
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
