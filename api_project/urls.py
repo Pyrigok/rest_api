@@ -17,9 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 
+from votes import urls
+
+
 urlpatterns = [
 	path('', include('api_app.urls')),
 	path('api-token-auth/', obtain_jwt_token, name='create-token'),
+    path('votes/', include(urls)),
+
 
     path('admin/', admin.site.urls),
 ]

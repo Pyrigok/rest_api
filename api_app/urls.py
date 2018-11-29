@@ -1,6 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from .views import ListPostsView, PostDetailView, LoginView, RegisterUsersView, UserList
+
+#from votes import urls
 
 urlpatterns = [
 
@@ -10,6 +12,8 @@ urlpatterns = [
 	
 	path('', ListPostsView.as_view(), name='posts_url'),
 	path('details/<int:pk>', PostDetailView.as_view(), name='posts_detail_url'),
+
+	#path('votes/', include(urls)),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

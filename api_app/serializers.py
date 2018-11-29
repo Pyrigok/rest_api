@@ -9,6 +9,7 @@ class PostsSerializer(serializers.Serializer):
 	author = serializers.CharField(required=True, allow_blank=False, max_length=100)
 	description = serializers.CharField(required=True, allow_blank=False, max_length=100)
 	owner = serializers.ReadOnlyField(source='owner.username')
+	votes = serializers.BooleanField(required=False)
 
 	def create(self, validated_data):
 		return PostModel.objects.create(**validated_data)

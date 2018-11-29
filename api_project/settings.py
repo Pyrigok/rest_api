@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'api_app',
     'rest_framework',
+    'votes',
 ]
 
 MIDDLEWARE = [

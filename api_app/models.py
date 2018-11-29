@@ -1,4 +1,5 @@
 from django.db import models
+from votes.managers import VotableManager
 
 class PostModel(models.Model):
 	class Meta:
@@ -23,5 +24,7 @@ class PostModel(models.Model):
 		null = False,
 		verbose_name = u'Post owner')
 
+	votes = VotableManager()
+
 	def __str__(self):
-		return '%s %s %s %s' %(self.title, self.author, self.description, self.owner)
+		return '%s %s %s %s %s' %(self.title, self.author, self.description, self.owner, self.wotes)

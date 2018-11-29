@@ -33,6 +33,13 @@ class ListPostsView(generics.ListCreateAPIView):
 	def perform_create(self, serializer):
 		serializer.save(owner=self.request.user)
 
+
+	# Up vote
+	#queryset.votes.up(user_id)
+
+	# Down vote
+	#queryset.votes.down(user_id)
+
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
 	queryset = PostModel.objects.all()
 	serializer_class = PostsSerializer
@@ -42,6 +49,7 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save(owner=self.request.user)
+
 
 
 # get the JWT settins

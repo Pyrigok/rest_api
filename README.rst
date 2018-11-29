@@ -7,3 +7,9 @@ You can install this project:
 	- git clone https://github.com/Pyrigok/rest_api.git
 	- pip install requirements.txt
 	- python manage.py runserver
+
+
+Sources:
+	- DRF for building API
+	- DRF JWT for authentication
+	- DRF Votes for ability like/dislike model
